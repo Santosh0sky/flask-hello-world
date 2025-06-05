@@ -1,5 +1,5 @@
 from flask import Flask
-
+from datetime import datetime
 app = Flask(__name__)
 
 @app.route('/')
@@ -11,7 +11,7 @@ def about():
     return 'About'
 
 @app.get("/api/health")
-async def health_check():
+def health_check():
     print("Uploading PDF...")
 
     return {"status": "healthy", "timestamp": datetime.now().isoformat()}
