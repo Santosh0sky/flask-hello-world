@@ -4,12 +4,14 @@ import os
 
 app = Flask(__name__)
 
-# Configure upload settings
-UPLOAD_DIR = "uploads"
-MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB max file size
 
-# Create uploads directory if it doesn't exist
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+# Use /tmp for uploads on Vercel, else use local uploads dir
+if os.environ.get('VERCEL'):  # Vercel sets some env vars
+    UPLOAD_DIR = "/tmp"
+else:
+    UPLOAD_DIR = "uploads"
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB max file size
 
 @app.route('/')
 def home():
